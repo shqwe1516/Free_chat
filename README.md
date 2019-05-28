@@ -3,14 +3,14 @@
 
 node.js의 socket.io를 활용한 실시간 그룹채팅
 
-![chat2](../chat2.png)
+![chat2](./image/chat2.png)
  처음메인화면
-![chat1](../chat1.png)
+![chat1](./image/chat1.png)
  채팅테스트화면
 
 
 ## 사용 예제
-#*app.js
+# *app.js
 
 //새로운 유저 접속
 ```
@@ -35,7 +35,7 @@ node.js의 socket.io를 활용한 실시간 그룹채팅
     socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: socket.name + '님이 나감'});
   });
 ```
-#*index.html
+# *index.html
 //body
 ```<body >
     <h1 id="h1">Free_Chat</h1>
