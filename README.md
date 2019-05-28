@@ -1,15 +1,11 @@
 # Free_chat
 > 실시간 그룹채팅
 
-[![NPM Version][npm-image]][npm-url]
-[![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url]
-
 node.js의 socket.io를 활용한 실시간 그룹채팅
 
-![chat2](./image/chat2.png)
+![chat2](../chat2.png)
  처음메인화면
-![chat1](./image/chat1.png)
+![chat1](../chat1.png)
  채팅테스트화면
 
 
