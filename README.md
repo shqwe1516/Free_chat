@@ -3,7 +3,7 @@
 
 node.js의 socket.io를 활용한 실시간 그룹채팅
 
-![chat2](./image/chat2.png)
+![chat2](https://user-images.githubusercontent.com/49370287/58519633-72850d80-81ef-11e9-91dc-c6d42fd2409b.png)
  처음메인화면
 ![chat1](./image/chat1.png)
  채팅테스트화면
