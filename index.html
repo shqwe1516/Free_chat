@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans:400" rel="stylesheet"> 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
   </head>
+
   <style>
         
     body {
@@ -136,6 +137,7 @@
 
 
   </style>
+
   <body >
     <h1 id="h1">Free_Chat</h1>
     <div id="btnform">
@@ -154,28 +156,27 @@
     </div>
   </body>
   <script>
-       window.onload= function(){
-
-window.resizeTo(375,812); 
-}
- 
-
     var socket = io()
-    document.getElementById('chat').scrollIntoView(); 
-    //엔터 이벤트
+
+//엔터 이벤트
     function press(){
       if(event.keyCode == 13){
         send();
       }
     };
+//스크롤 아래 고정
+    var autoScroll = function() { 
+      document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+    };
 
-    //로그인함수
+
+//로그인 함수
     function login(){
       var main = document.getElementById('main');
       var btnlogout =document.getElementById('btnlogout');
         main.style.visibility = 'visible';
       var name =document.getElementById('id').value;
-      //이름이 빈칸인 경우 익명 + 랜덤 숫자
+//이름이 빈칸인 경우 익명 + 랜덤 숫자
       if(!name) {
         name = 'Unknown'+Math.floor(Math.random() * 100) + 1;
       }
@@ -188,28 +189,28 @@ window.resizeTo(375,812);
         btnlogout.style.visibility = 'visible';
         socket.emit('newuser', name);
     };
-    //로그아웃시 새로고침
+//로그아웃시 새로고침
     function logout(){
       location.href="/";
     };
-    //서버로부터 받아오기
+//서버로부터 받아오기
     socket.on('update', function(data) {
       var chat = document.getElementById('chat');
       var message = document.createElement('div');
       var node = document.createTextNode(`${data.name}: ${data.message}`);
       var className = '';
 
-    // 타입에 따라 적용할 클래스를 다르게 지정
+// 타입에 따라 적용할 클래스를 다르게 지정
       switch(data.type) {
-        //상대방 메세지
+  //상대방 메세지
         case 'message':
           className = 'other'
           break;
-        //접속
+  //접속
         case 'connect':
           className = 'connect'
           break;
-         //접속 종료
+  //접속 종료
         case 'disconnect':
           className = 'disconnect'
           break;
@@ -219,7 +220,7 @@ window.resizeTo(375,812);
       chat.appendChild(message);
     });
 
-    // 메시지 전송 함수 
+// 메시지 전송 함수 
     function send() {
       var message = document.getElementById('text').value;
       if(!message){
@@ -233,15 +234,11 @@ window.resizeTo(375,812);
         msg.appendChild(node);
         chat.appendChild(msg);
 
-      // 서버로 message 이벤트 전달 + 데이터와 함께
+// 서버로 message 이벤트 전달 + 데이터와 함께
       socket.emit('message', {type: 'message', message: message});
       
       autoScroll();
       }
-    };
-    //스크롤 아래 고정
-    var autoScroll = function() { 
-      document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
     };
 
 
