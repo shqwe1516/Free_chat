@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" name="viewport" content="width=device-width,height=device-height, initial-scale = 0.6" />
+    <title>Free Chat</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Black+Han+Sans:400" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  </head>
+  <style>
+        
+    body {
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-family: 'Black Han Sans', sans-serif;
+      background-color: #fff;
+    }
+    #main {
+      letter-spacing: 1px;
+      border: solid 1px;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-family: 'Black Han Sans', sans-serif;
+      margin: auto;
+      border-radius: 20px;
+      background-color: #fff;
+      text-align: center;
+      width: 500px;
+      height: 680px;
+      visibility: hidden;
+    }
+    #text {
+      letter-spacing: 2px;
+      border: solid 1px;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-family: 'Black Han Sans', sans-serif;
+      background-color:  #fff;
+      height: 50px;
+      width: 400px;
+      border-radius: 5px;
+      font-size: 20px;
+    }
+    #chat {
+      height: 90%;
+      width: 100%;
+      overflow-x:hidden;
+    }
+    .connect {
+      border: solid 1px;
+      width: 80%;
+      margin: auto;
+      background-color: rgba(12, 128, 64,0.5);
+      text-align: center;
+      margin-top: 10px;
+    }
+    .disconnect {
+      border: solid 1px;
+      width: 80%;
+      margin: auto;
+      background-color: rgb(205,92,92,0.5);
+      text-align: center;
+      margin-top: 10px;
+    }
+    .me {
+      border: solid 1px;
+      width: 300px;
+      margin-left:180px;
+      background-color: #fff;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    .other {
+      border: solid 1px;
+      width: 300px;
+      margin-left: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+    #btn {
+      padding: 5px;
+      border: solid 1px;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-family: 'Black Han Sans', sans-serif;
+      background-color: #fff;
+      width: 70px;
+      height: 50px;
+      text-align: center;
+      border-radius: 5px;
+      font-size: 20px;
+    }
+    #btnlogin {
+      border: solid 1px;
+      font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: 20px;
+      background-color: #fff;
+      width: 80px;
+      height: 50px;
+      text-align: center;
+      border-radius: 5px;
+    }
+    #btnlogout {
+      padding: 5px;
+      margin-left: 210px;
+      margin-top: 0px;
+      position: absolute;
+      visibility: hidden;
+      font-size: 25px;
+      background-color: #fff;
+      color: #111111;;
+      border-radius: 20px;
+      width: 40px ;
+      border: solid 0px;
+
+    }
+    #btnform {
+      position: absolute;
+      margin-top: 300px;
+      margin-left: 550px;
+    }
+    #id {
+      border: solid 1px;
+      height: 46px;
+      width: 160px;
+      font-size: 20px;
+      border-radius: 5px;
+      
+    }
+    h1{
+      position: absolute;
+      font-family: Impact;
+      text-align: center;
+      font-size: 80px;
+      letter-spacing: 2px;
+      margin-top: 140px;
+      margin-left: 700px;
+    }
+
+
+  </style>
+  <body >
+    <h1 id="h1">Free_Chat</h1>
+    <div id="btnform">
+      <input id="id" type="text" placeholder="Unknown" >  
+      <button id="btnlogin"  onclick="login()">Connect</button>
+    </div>
+      
+
+    <div id="main">
+        <button id="btnlogout" onclick="logout()">X</button>
+      <div id="chat"></div>  
+      <div>
+        <input type="text" id="text" placeholder="   Write here.." onkeydown="JavaScript:press();">
+        <button id="btn" onclick="send()">SEND</button>
+      </div>
+    </div>
+  </body>
+  <script>
+       window.onload= function(){
+
+window.resizeTo(375,812); 
+}
+ 
+
+    var socket = io()
+    document.getElementById('chat').scrollIntoView(); 
+    //엔터 이벤트
+    function press(){
+      if(event.keyCode == 13){
+        send();
+      }
+    };
+
+    //로그인함수
+    function login(){
+      var main = document.getElementById('main');
+      var btnlogout =document.getElementById('btnlogout');
+        main.style.visibility = 'visible';
+      var name =document.getElementById('id').value;
+      //이름이 빈칸인 경우 익명 + 랜덤 숫자
+      if(!name) {
+        name = 'Unknown'+Math.floor(Math.random() * 100) + 1;
+      }
+      var name1 =document.getElementById('id');
+      var btnlogin =document.getElementById('btnlogin');
+      var h1 =document.getElementById('h1');
+        name1.style.visibility = 'hidden';
+        h1.style.visibility = 'hidden';
+        btnlogin.style.visibility = 'hidden';
+        btnlogout.style.visibility = 'visible';
+        socket.emit('newuser', name);
+    };
+    //로그아웃시 새로고침
+    function logout(){
+      location.href="/";
+    };
+    //서버로부터 받아오기
+    socket.on('update', function(data) {
+      var chat = document.getElementById('chat');
+      var message = document.createElement('div');
+      var node = document.createTextNode(`${data.name}: ${data.message}`);
+      var className = '';
+
+    // 타입에 따라 적용할 클래스를 다르게 지정
+      switch(data.type) {
+        //상대방 메세지
+        case 'message':
+          className = 'other'
+          break;
+        //접속
+        case 'connect':
+          className = 'connect'
+          break;
+         //접속 종료
+        case 'disconnect':
+          className = 'disconnect'
+          break;
+      };
+      message.classList.add(className);
+      message.appendChild(node);
+      chat.appendChild(message);
+    });
+
+    // 메시지 전송 함수 
+    function send() {
+      var message = document.getElementById('text').value;
+      if(!message){
+        alert('No text');
+      }else{
+        document.getElementById('text').value = '';
+      var chat = document.getElementById('chat');
+      var msg = document.createElement('div');
+      var node = document.createTextNode(message);
+        msg.classList.add('me');
+        msg.appendChild(node);
+        chat.appendChild(msg);
+
+      // 서버로 message 이벤트 전달 + 데이터와 함께
+      socket.emit('message', {type: 'message', message: message});
+      
+      autoScroll();
+      }
+    };
+    //스크롤 아래 고정
+    var autoScroll = function() { 
+      document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+    };
+
+
+  </script>
+</html>
