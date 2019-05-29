@@ -1,7 +1,7 @@
 # ***Free_chat***
 > 실시간 그룹채팅.
 
-[![NPM Version][npm-image]][npm-url]
+
 
 node.js의 socket.io를 활용한 실시간 그룹채팅.
 
@@ -167,6 +167,3 @@ node.js의 socket.io를 활용한 실시간 그룹채팅.
 
 
 
-<!-- Markdown link & img dfn's -->
-[npm-image]: https://img.shields.io/npm/v/datadog-metrics.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/datadog-metrics
