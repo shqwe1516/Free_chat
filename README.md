@@ -12,9 +12,9 @@ node.js의 socket.io를 활용한 실시간 그룹채팅.
 
 
 ## 사용 예제
-#### *app.js
+### *app.js
 
-//새로운 유저 접속
+##### //새로운 유저 접속
 ```
   socket.on('newuser', function(name) {
     console.log(name + ' login');
@@ -22,7 +22,7 @@ node.js의 socket.io를 활용한 실시간 그룹채팅.
     io.sockets.emit('update', {type: 'connect', name: 'SERVER', message: name + '님이 접속'});
   });
 ```
-//채팅메시지
+##### //채팅메시지
 ```
   socket.on('message', function(data) {
     data.name = socket.name;
@@ -30,15 +30,15 @@ node.js의 socket.io를 활용한 실시간 그룹채팅.
     socket.broadcast.emit('update', data);
   })
 ```
-//접속종료
+##### //접속종료
 ```
   socket.on('disconnect', function() {
     console.log(socket.name + 'logout');
     socket.broadcast.emit('update', {type: 'disconnect', name: 'SERVER', message: socket.name + '님이 나감'});
   });
 ```
-#### *index.html
-//body
+### *index.html
+##### //body
 ```<body >
     <h1 id="h1">Free_Chat</h1>
     <div id="btnform">
@@ -57,22 +57,23 @@ node.js의 socket.io를 활용한 실시간 그룹채팅.
     </div>
   </body>
 ```
-#### *js
+### *js
+
+##### //엔터 이벤트
 ```
-//엔터 이벤트
     function press(){
       if(event.keyCode == 13){
         send();
       }
     };
 ```
-//최신화시 스크롤 하단 고정 이벤트
+##### //최신화시 스크롤 하단 고정 이벤트
 ```
     var autoScroll = function() { 
       document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
     };
 ```
-//로그인 이벤트
+##### //로그인 이벤트
 ```
     function login(){
       var main = document.getElementById('main');
@@ -94,13 +95,13 @@ node.js의 socket.io를 활용한 실시간 그룹채팅.
         socket.emit('newuser', name);
     };
 ```
-//로그아웃시 새로고침 이벤트
+##### //로그아웃시 새로고침 이벤트
 ```
     function logout(){
       location.href="/";
     };
 ```
-//서버로부터 받아오기
+##### //서버로부터 받아오기
 ```
     socket.on('update', function(data) {
       var chat = document.getElementById('chat');
@@ -128,7 +129,7 @@ node.js의 socket.io를 활용한 실시간 그룹채팅.
       chat.appendChild(message);
     });
 ```
-// 메시지 전송 이벤트 
+##### // 메시지 전송 이벤트 
 ```
     function send() {
       var message = document.getElementById('text').value;
@@ -143,7 +144,7 @@ node.js의 socket.io를 활용한 실시간 그룹채팅.
         msg.appendChild(node);
         chat.appendChild(msg);
 ```        
-// 서버로 message 이벤트 전달 + 데이터와 함께
+##### // 서버로 message 이벤트 전달 + 데이터와 함께
 ```
       socket.emit('message', {type: 'message', message: message});
       
