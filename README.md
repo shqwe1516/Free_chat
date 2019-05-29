@@ -1,4 +1,4 @@
-# ***Free_chat****
+# ***Free_chat***
 > 실시간 그룹채팅
 
 node.js의 socket.io를 활용한 실시간 그룹채팅
