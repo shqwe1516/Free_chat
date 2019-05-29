@@ -1,14 +1,13 @@
 # ***Free_chat***
 > 실시간 그룹채팅.
 
-
-
 node.js의 socket.io를 활용한 실시간 그룹채팅.
 
 
- ### 처음메인화면
+
+ ### [메인 화면]
 ![chat1](https://user-images.githubusercontent.com/49370287/58519743-ce4f9680-81ef-11e9-8deb-294de0ff672f.png)
- ### 채팅테스트화면
+ ### [채팅 테스트 화면]
 ![chat2](https://user-images.githubusercontent.com/49370287/58519633-72850d80-81ef-11e9-91dc-c6d42fd2409b.png)
 
 
