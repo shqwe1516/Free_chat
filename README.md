@@ -83,7 +83,7 @@ node.js의 socket.io를 활용한 실시간 그룹채팅.
       
       /*이름이 빈칸인 경우 익명 + 랜덤 숫자*/
       if(!name) {
-        name = 'Unknown'+Math.floor(Math.random() * 100) + 1;
+        name = 'Unknown'+Math.ceil(Math.random() * 100);
       }
       var name1 =document.getElementById('id');
       var btnlogin =document.getElementById('btnlogin');
